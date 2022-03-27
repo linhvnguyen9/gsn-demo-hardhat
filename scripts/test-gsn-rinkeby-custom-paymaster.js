@@ -6,14 +6,24 @@ const Web3HttpProvider = require( 'web3-providers-http')
 const rinkebyConfig = JSON.parse(fs.readFileSync('rinkeby.json').toString());
 
 async function main() {
-    let paymasterAddress = '0xA6e10aA9B038c9Cddea24D2ae77eC3cE38a0c016' //GSN's Rinkeby AcceptEverythingPaymaster address https://docs.opengsn.org/networks/ethereum/rinkeby.html
+    let forwarderAddress = '0x83A54884bE4657706785D7309cf46B58FE5f6e8a'
+    const paymasterAddress = '0xE38786Bc6135Fc847339b5Cc9ad34055259aD2b6'
 
     const web3provider = new Web3HttpProvider(rinkebyConfig.url)
 
-    var counter = await hre.ethers.getContractAt('Counter', '0xA4478c406ff475158F0b3192cAf9EDe02382A3f3')
+    // let factory = await hre.ethers.getContractFactory('AcceptEverythingPaymaster')
+    // var paymaster = await factory.deploy()
+    // let paymasterAddress = await paymaster.address
+    // await paymaster.setRelayHub('0x6650d69225CA31049DB7Bd210aE4671c0B1ca132')
+    // await paymaster.setTrustedForwarder(forwarderAddress)
+    // const tx = await signer.sendTransaction({
+    //     to: paymasterAddress,
+    //     value: ethers.utils.parseEther("0.1")
+    // });
 
-    // let factory = await hre.ethers.getContractFactory('Counter')
-    // var counter = await factory.deploy(forwarderAddress)
+    console.log('Paymaster deployed at ', paymasterAddress);
+
+    var counter = await hre.ethers.getContractAt('Counter', '0xA4478c406ff475158F0b3192cAf9EDe02382A3f3')
     
     await counter.deployed()
 
